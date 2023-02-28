@@ -58,10 +58,71 @@ id.
 POST: /api/users
 ----------------
 
-This endpoint creates a new user in the system.
+This endpoint creates a new user in the system. The request payload *must* 
+contain 
 
 
 PUT: /api/users/{user_id}
 -------------------------
 
-This endpoint updats an existing user the system.
+This endpoint updates an existing user the system. 
+
+
+GET: /api/users/{user_id}/visits
+--------------------------------
+
+Fetches all visits for this user. 
+
+This endpoit supports the inclusion of the `ongoing` query parameter. If 
+specified and set true, only visits for the user which are ongoing will be 
+returned. (There should only ever be 0 or 1 of these returned). If the 
+parameter is included and set false, only completed visits for the user will 
+be returned.
+
+.. code-block:: sh
+
+   GET: /api/users/123/visits                # Gets all visits for user 123
+   GET: /api/users/123/visits?ongoing=true   # Gets ongoing visits for user 123
+   GET: /api/users/123/visits?ongoing=false  # Gets completed visits for user 123
+
+The response will consist of a list of visits.  There is no pagination so all 
+matching visits are returned!
+
+.. code-block:: json
+
+   [
+        {
+            "id": 123,
+            "startTime": "Mon, 19 Sep 2022 14:56:37 GMT",
+            "endTime": null
+        },
+        {
+            "id": 123,
+            "startTime": "Mon, 18 Sep 2022 14:00:00 GMT",
+            "endTime": "Mon, 18 Sep 2022 20:00:00 GMT"
+        }
+   ]
+
+POST: /api/users/{user_id}/visits
+---------------------------------
+
+Creates a new visit for the given user.  The endpoint ignores anything in the 
+request body as the new visit will always have a start time of now.
+
+The responce payload will be the newly created visit and look like the 
+following. The endtime will always be null for a newly created visit.
+
+.. code-block:: json
+
+   {
+        "id": 123,
+        "startTime": "Mon, 19 Sep 2022 14:56:37 GMT",
+        "endTime": null
+   }
+
+The request for a new visit may be rejected.  The request will be rejected in 
+the event that the included user does not exist in the system.  In this case,
+the 404 Not-Found error code will be returned.  Aditionally, the request will 
+be rejected if the user does already exist in the system but already has an 
+ongoing visit.  (A user may only have a single onging visit at a time.)  In 
+this case, the the 400 Bad-Request code will be returned

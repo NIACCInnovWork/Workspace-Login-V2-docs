@@ -12,6 +12,7 @@ Welcome to Workspace Login's documentation!
 
    api/index
    server_config
+   utilities/index
 
 This page serves to describe and document various components and aspects of the
 inovation workspace login application.  The application was created in house 

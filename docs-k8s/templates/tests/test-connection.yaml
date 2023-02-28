@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "docs-k8s.fullname" . }}:{{ .Values.service.port }}']
+      args: ['https://workspace-login.riesenlabs.com/docs/index.html']
   restartPolicy: Never

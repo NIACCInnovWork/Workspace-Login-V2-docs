@@ -1,7 +1,8 @@
 Server Configuration
 ====================
 
-The API server is written using Flask as a framework. 
+The API server is written using Flask as a framework. All code related to the 
+handling of http calls is in the `ws_login_flaskr` module.
 
 
 Configuration

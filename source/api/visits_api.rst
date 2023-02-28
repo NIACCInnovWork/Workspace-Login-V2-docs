@@ -9,7 +9,7 @@ When a user enters the workspace, they are to sign in.  This creates a new
 visit record for that user with a null end time.  The visit with the null end 
 time is said to be ongoing as it represents the user is present in the 
 workspace right now. The sign-in operation is handled by the 
-POST: /api/users/{user_id}/visits endpoint.
+`POST: /api/users/{user_id}/visits <create-visit>`_ endpoint.
 
 When the user leaves the workspace, they are to sign-out.  This sign-out ends 
 the ongoing visit for the user and collects information about the user about 
